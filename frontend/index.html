@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FoodLens — read the label before it reads you</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain"></div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="wordmark">
+        <span class="wordmark-lens">Food</span><span class="wordmark-food">Lens</span>
+      </div>
+      <div class="tagline">a magnifying glass for ingredient panels</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">01 — scan or paste</p>
+        <h1>What's actually<br/>in this?</h1>
+        <p class="lede">
+          Photograph an ingredient panel or paste the list. FoodLens cross-references every
+          E-number, ingredient, and processing marker against food-safety data and your own
+          dietary profile — in seconds, not label-squinting.
+        </p>
+      </div>
+      <div class="hero-scan-lines" aria-hidden="true"></div>
+    </section>
+
+    <section class="input-panel">
+      <div class="panel-column">
+        <h2 class="panel-title"><span class="tick">02</span> Capture the label</h2>
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept="image/*" capture="environment" hidden />
+          <div class="dropzone-inner">
+            <div class="lens-icon" aria-hidden="true">
+              <div class="lens-ring"></div>
+              <div class="lens-handle"></div>
+            </div>
+            <p><strong>Tap to photograph</strong> or drop an image of the ingredients panel</p>
+            <p class="hint">JPG, PNG, or WEBP — under 10MB</p>
+          </div>
+          <img id="preview" class="preview" alt="Uploaded label preview" hidden />
+        </div>
+        <div id="ocrStatus" class="status-line" hidden></div>
+      </div>
+
+      <div class="panel-column">
+        <h2 class="panel-title"><span class="tick">03</span> Or paste the text</h2>
+        <textarea id="ingredientText" rows="8"
+          placeholder="Water, sugar, modified maize starch, E102, E621, malt extract, salt..."></textarea>
+
+        <div class="profile-block">
+          <h3>Your profile <span class="optional">(optional, refines the read)</span></h3>
+          <div class="chip-group" id="conditionChips" data-label="Conditions to flag">
+            <button type="button" class="chip" data-value="diabetes">Diabetes</button>
+            <button type="button" class="chip" data-value="adhd">ADHD</button>
+            <button type="button" class="chip" data-value="allergies">Allergy-prone</button>
+            <button type="button" class="chip" data-value="hypertension">Hypertension</button>
+            <button type="button" class="chip" data-value="pregnancy">Pregnancy</button>
+            <button type="button" class="chip" data-value="pku">PKU</button>
+          </div>
+          <div class="chip-group" id="restrictionChips" data-label="Dietary restrictions">
+            <button type="button" class="chip" data-value="gluten_free">Gluten-free</button>
+            <button type="button" class="chip" data-value="lactose_free">Lactose-free</button>
+            <button type="button" class="chip" data-value="vegan">Vegan</button>
+            <button type="button" class="chip" data-value="vegetarian">Vegetarian</button>
+            <button type="button" class="chip" data-value="nut_allergy">Nut allergy</button>
+            <button type="button" class="chip" data-value="peanut_allergy">Peanut allergy</button>
+            <button type="button" class="chip" data-value="soy_allergy">Soy allergy</button>
+            <button type="button" class="chip" data-value="egg_allergy">Egg allergy</button>
+            <button type="button" class="chip" data-value="halal">Halal</button>
+            <button type="button" class="chip" data-value="kosher">Kosher</button>
+          </div>
+        </div>
+
+        <button id="analyzeBtn" class="analyze-btn">Read the label</button>
+        <div id="analyzeStatus" class="status-line" hidden></div>
+      </div>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-header">
+        <p class="eyebrow">04 — the read</p>
+        <h2 id="summaryLine"></h2>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card" id="novaCard">
+          <h3>Processing level</h3>
+          <div class="nova-badge" id="novaBadge">—</div>
+          <p id="novaExplanation" class="card-text"></p>
+        </div>
+
+        <div class="result-card" id="additivesCard">
+          <h3>Additives found</h3>
+          <ul id="additivesList" class="finding-list"></ul>
+        </div>
+
+        <div class="result-card" id="allergensCard">
+          <h3>Profile conflicts</h3>
+          <ul id="allergensList" class="finding-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>FoodLens is an informational tool, not medical advice. Built for the Nebius Serverless AI Builders Challenge.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

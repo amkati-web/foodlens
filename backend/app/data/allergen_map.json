@@ -1,0 +1,42 @@
+{
+  "gluten_free": {
+    "flags": ["wheat", "wheat flour", "barley", "rye", "malt", "malt extract", "malt vinegar", "modified wheat starch", "modified food starch", "brewer's yeast", "spelt", "triticale", "semolina", "durum", "couscous", "seitan", "hydrolyzed wheat protein", "wheat starch"],
+    "note": "Plain 'modified starch' is ambiguous (can be gluten-free corn/potato starch) \u2014 EU labelling requires the specific source to be named if it is a gluten grain."
+  },
+  "lactose_free": {
+    "flags": ["milk", "milk powder", "milk solids", "whey", "whey powder", "casein", "caseinate", "lactose", "butter", "butterfat", "ghee", "cream", "curds", "skimmed milk powder", "buttermilk", "milk fat"],
+    "note": "Caseinate and whey are dairy-derived even when the word 'milk' does not appear."
+  },
+  "vegan": {
+    "flags": ["gelatin", "gelatine", "whey", "casein", "honey", "carmine", "cochineal", "E120", "shellac", "E904", "lard", "tallow", "beeswax", "E901", "isinglass", "egg", "egg white", "albumin", "milk", "anchovy", "fish sauce", "L-cysteine", "vitamin D3 (lanolin)"],
+    "note": "L-cysteine (E920) used as a dough conditioner is frequently derived from duck/human feathers or synthesised; check the manufacturer if it matters to you."
+  },
+  "vegetarian": {
+    "flags": ["gelatin", "gelatine", "rennet", "isinglass", "lard", "tallow", "anchovy", "fish sauce", "carmine", "cochineal", "E120", "L-cysteine"],
+    "note": "Rennet in cheese and gelatine in gummy sweets/marshmallows are the most commonly missed non-vegetarian ingredients."
+  },
+  "nut_allergy": {
+    "flags": ["almond", "hazelnut", "walnut", "cashew", "pistachio", "pecan", "brazil nut", "macadamia", "praline", "marzipan", "nougat", "nut oil", "may contain nuts", "may contain traces of nuts"],
+    "note": "Praline, marzipan and nougat are common hidden sources of tree nuts in confectionery."
+  },
+  "peanut_allergy": {
+    "flags": ["peanut", "groundnut", "arachis oil", "peanut oil", "monkey nut", "may contain peanuts"],
+    "note": "'Arachis oil' and 'groundnut oil' are both peanut oil under different names."
+  },
+  "halal": {
+    "flags": ["gelatin", "gelatine", "lard", "pork", "bacon", "ham", "alcohol", "wine vinegar", "rum", "L-cysteine", "rennet", "E120", "carmine"],
+    "note": "Gelatine and enzymes (rennet, L-cysteine) require certified halal sourcing to confirm suitability."
+  },
+  "kosher": {
+    "flags": ["gelatin", "gelatine", "lard", "pork", "bacon", "shellfish", "shrimp", "crab", "rennet", "E120", "carmine"],
+    "note": "Mixing meat and dairy derivatives in the same product is also a kosher concern beyond individual ingredients."
+  },
+  "soy_allergy": {
+    "flags": ["soy", "soya", "soy lecithin", "soybean oil", "textured vegetable protein", "TVP", "hydrolyzed soy protein", "edamame", "miso", "tempeh", "E322"],
+    "note": "E322 (lecithin) is very frequently soy-derived unless labelled 'sunflower lecithin'."
+  },
+  "egg_allergy": {
+    "flags": ["egg", "egg white", "egg yolk", "albumin", "ovalbumin", "lysozyme", "mayonnaise", "meringue", "lecithin (egg)"],
+    "note": "Lysozyme (E1105), sometimes used in cheese, is egg-derived."
+  }
+}

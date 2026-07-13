@@ -1,0 +1,37 @@
+{
+  "nova_1": {
+    "label": "Unprocessed or minimally processed foods",
+    "description": "Single ingredient foods, or foods altered only by removal, drying, freezing, pasteurising, or grinding \u2014 no added substances.",
+    "example_markers": ["fresh", "frozen", "dried", "pasteurised milk", "plain yogurt", "rolled oats", "single ingredient"]
+  },
+  "nova_2": {
+    "label": "Processed culinary ingredients",
+    "description": "Substances extracted from nova_1 foods or from nature, used to prepare and season food: oils, butter, sugar, salt, vinegar.",
+    "example_markers": ["olive oil", "sugar", "salt", "butter", "honey", "vinegar", "starch"]
+  },
+  "nova_3": {
+    "label": "Processed foods",
+    "description": "Nova_1 foods with nova_2 ingredients added (canned vegetables in brine, cheese, fresh bread, cured meats, canned fish) \u2014 typically 2-5 recognisable ingredients, no cosmetic/functional additive cocktail.",
+    "example_markers": ["canned", "in brine", "cured", "smoked", "cheese", "fresh bread", "canned fish"]
+  },
+  "nova_4": {
+    "label": "Ultra-processed foods (UPF)",
+    "description": "Industrial formulations typically with five or more ingredients, including substances not used in home cooking (hydrogenated oils, modified starches, protein isolates) and/or cosmetic additives (colours, flavour enhancers, emulsifiers, sweeteners, anti-foaming/bulking/carbonating agents) whose function is to make the final product palatable or shelf-stable rather than nutritious.",
+    "trigger_categories": [
+      "emulsifier", "flavour enhancer", "artificial sweetener", "colour",
+      "hydrogenated oil", "interesterified fat", "protein isolate",
+      "modified starch", "flavouring", "anti-foaming agent", "bulking agent",
+      "carbonating agent", "firming agent", "glazing agent", "humectant",
+      "hydrolysed protein", "maltodextrin", "invert sugar", "high-fructose corn syrup"
+    ],
+    "trigger_terms": [
+      "flavouring", "flavour", "modified starch", "modified maize starch",
+      "hydrogenated", "interesterified", "isolate", "protein concentrate",
+      "maltodextrin", "high fructose corn syrup", "corn syrup solids",
+      "invert sugar", "dextrose", "mono- and diglycerides", "polysorbate",
+      "carboxymethyl cellulose", "colour", "colouring", "artificial sweetener",
+      "flavour enhancer"
+    ]
+  },
+  "notes": "This is a lightweight heuristic reproduction of Monteiro et al.'s NOVA classification for demo/MVP purposes. The Nebius-hosted fine-tuned model (see training/) is trained on Open Food Facts NOVA-labelled products to generalise beyond these keyword rules."
+}
