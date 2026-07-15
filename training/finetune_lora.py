@@ -99,7 +99,6 @@ def main() -> None:
         logging_steps=10,
         save_strategy="epoch",
         eval_strategy="epoch" if args.val_file else "no",
-        max_seq_length=args.max_seq_length,
         dataset_text_field="text",
         report_to=[],
     )

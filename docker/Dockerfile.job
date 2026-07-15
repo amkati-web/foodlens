@@ -4,15 +4,20 @@
 FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.11 python3-pip git \
+    python3 python3-pip git \
     && rm -rf /var/lib/apt/lists/*
-RUN ln -s /usr/bin/python3.11 /usr/bin/python
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /workspace
 
 COPY training/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --no-cache-dir --upgrade pip \
+    && python3 -m pip install --no-cache-dir -r requirements.txt
 
 COPY training/ ./training/
+# prepare_dataset.py resolves REPO_ROOT as two parents up from itself (i.e.
+# /workspace here) and reads backend/app/data/*.json relative to that - so
+# that directory must exist inside the image too, not just training/.
+COPY backend/app/data ./backend/app/data
 
-ENTRYPOINT ["python", "training/finetune_lora.py"]
+ENTRYPOINT ["python3", "training/finetune_lora.py"]

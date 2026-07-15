@@ -119,7 +119,8 @@ def build_nova_examples_from_off(sample_size: int) -> list[dict]:
     examples: list[dict] = []
     try:
         log.info("Downloading Open Food Facts export (streaming, this can take a while)...")
-        with requests.get(OFF_EXPORT_URL, stream=True, timeout=30) as resp:
+        headers = {"User-Agent": "FoodLens/0.1 (Nebius Serverless AI Builders Challenge; contact: amkati@gmail.com)"}
+        with requests.get(OFF_EXPORT_URL, stream=True, timeout=30, headers=headers) as resp:
             resp.raise_for_status()
             with gzip.open(resp.raw, mode="rt", encoding="utf-8", errors="ignore") as f:
                 reader = csv.DictReader(f, delimiter="\t")

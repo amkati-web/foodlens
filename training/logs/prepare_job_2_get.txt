@@ -1,0 +1,39 @@
+Job:
+  ID:       aijob-e00g5qxayk65vkygf8
+  Name:     foodlens-prepare
+  State:    COMPLETED
+  Created:  6 minutes ago
+
+Container:
+  Image:    cr.eu-north1.nebius.cloud/e00a15g8ewdhgn6qj3/foodlens-job:latest
+  Command:  python3
+  Args:     training/prepare_dataset.py --out /mnt/output/dataset/train.jsonl --off-sample-size 20000
+
+Resources:
+  Platform:  cpu-e2
+  Preset:    2vcpu-8gb
+  Disk:      250 GiB (NETWORK_SSD)
+
+Volumes:
+  /mnt/output -> storagebucket-e0015191921433558970127 (READ_WRITE)
+
+Instances:
+    COMPUTE INSTANCE                    PRIVATE IP  PUBLIC IP  STATE
+    computeinstance-e00ktv8063d3s99nmd  10.0.0.37   -          RUNNING
+
+Metadata:
+  Timeout:           7200s
+  Parent ID:         project-e00pj499pr00e6t80br999
+  Resource Version:  1
+  Subnet:            vpcsubnet-e00jamwxs6snj6tcew
+
+[1m[0m[1m[0m  [1mUseful[0m[1m Commands[0m                                                                                                                                             
+                                                                                                                                                              
+  • To stream job logs: 	[1mnebius ai job logs aijob-e00g5qxayk65vkygf8 --follow[0m                                                                                  
+  • To restart the job: 	[1mnebius ai job restart aijob-e00g5qxayk65vkygf8[0m                                                                                        
+  • To cancel the job: 	[1mnebius ai job cancel aijob-e00g5qxayk65vkygf8[0m                                                                                          
+  • To delete the job: 	[1mnebius ai job delete aijob-e00g5qxayk65vkygf8[0m                                                                                          
+  • To SSH into the job: 	[1mnebius ai job ssh aijob-e00g5qxayk65vkygf8[0m                                                                                           
+  • To list all jobs: 	[1mnebius ai job list --parent-id project-e00pj499pr00e6t80br999[0m                                                                           
+
+
