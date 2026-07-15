@@ -126,7 +126,7 @@ def main() -> None:
         dst_root = os.path.join(args.output_dir, rel) if rel != "." else args.output_dir
         os.makedirs(dst_root, exist_ok=True)
         for fname in files:
-            shutil.copy(os.path.join(root, fname), os.path.join(dst_root, fname))
+            shutil.copyfile(os.path.join(root, fname), os.path.join(dst_root, fname))
     log.info("Done. Merge + deploy with training/submit_nebius_job.py --stage deploy")
 
 
