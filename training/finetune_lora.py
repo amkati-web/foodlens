@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
+import shutil
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("finetune_lora")
@@ -89,8 +91,10 @@ def main() -> None:
 
     dataset = dataset.map(format_example, remove_columns=dataset["train"].column_names)
 
+    local_output_dir = "/workspace/local_checkpoint"
+    os.makedirs(local_output_dir, exist_ok=True)
     sft_config = SFTConfig(
-        output_dir=args.output_dir,
+        output_dir=local_output_dir,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.per_device_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
@@ -113,9 +117,12 @@ def main() -> None:
     log.info("Starting training: %d epochs", args.epochs)
     trainer.train()
 
-    log.info("Saving LoRA adapter to %s", args.output_dir)
-    trainer.save_model(args.output_dir)
-    tokenizer.save_pretrained(args.output_dir)
+    log.info("Saving LoRA adapter locally to %s", local_output_dir)
+    trainer.save_model(local_output_dir)
+    tokenizer.save_pretrained(local_output_dir)
+    log.info("Copying LoRA adapter to mounted output dir %s", args.output_dir)
+    os.makedirs(args.output_dir, exist_ok=True)
+    shutil.copytree(local_output_dir, args.output_dir, dirs_exist_ok=True)
     log.info("Done. Merge + deploy with training/submit_nebius_job.py --stage deploy")
 
 
