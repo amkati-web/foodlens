@@ -121,8 +121,12 @@ def main() -> None:
     trainer.save_model(local_output_dir)
     tokenizer.save_pretrained(local_output_dir)
     log.info("Copying LoRA adapter to mounted output dir %s", args.output_dir)
-    os.makedirs(args.output_dir, exist_ok=True)
-    shutil.copytree(local_output_dir, args.output_dir, dirs_exist_ok=True)
+    for root, dirs, files in os.walk(local_output_dir):
+        rel = os.path.relpath(root, local_output_dir)
+        dst_root = os.path.join(args.output_dir, rel) if rel != "." else args.output_dir
+        os.makedirs(dst_root, exist_ok=True)
+        for fname in files:
+            shutil.copy(os.path.join(root, fname), os.path.join(dst_root, fname))
     log.info("Done. Merge + deploy with training/submit_nebius_job.py --stage deploy")
 
 
