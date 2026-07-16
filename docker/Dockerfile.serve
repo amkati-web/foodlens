@@ -1,0 +1,15 @@
+# Serving image for the merged, fine-tuned FoodLens model.
+# Runs vLLM's OpenAI-compatible server, exposing /v1/chat/completions —
+# matching what backend/app/services/nebius_client.py already expects.
+#
+# The merged model is NOT baked into this image - it's read at runtime from
+# a mounted Nebius bucket path, the same pattern used by the training jobs
+# (docker/Dockerfile.job). This avoids manually downloading/uploading
+# multi-GB model weights between the bucket and the build machine.
+FROM vllm/vllm-openai:latest
+
+ENTRYPOINT ["python3", "-m", "vllm.entrypoints.openai.api_server", \
+    "--model", "/mnt/models/foodlens-qwen3-1.7b-merged", \
+    "--served-model-name", "foodlens-qwen3-1.7b", \
+    "--port", "8000", \
+    "--max-model-len", "4096"]
