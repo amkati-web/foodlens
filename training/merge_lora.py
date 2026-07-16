@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
+import shutil
 
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -44,9 +46,19 @@ def main() -> None:
     log.info("Merging adapter into base weights")
     merged_model = model.merge_and_unload()
 
-    log.info("Saving merged model to: %s", args.output_dir)
-    merged_model.save_pretrained(args.output_dir, safe_serialization=True)
-    tokenizer.save_pretrained(args.output_dir)
+    local_output_dir = "/workspace/local_merged"
+    os.makedirs(local_output_dir, exist_ok=True)
+    log.info("Saving merged model locally to: %s", local_output_dir)
+    merged_model.save_pretrained(local_output_dir, safe_serialization=True)
+    tokenizer.save_pretrained(local_output_dir)
+
+    log.info("Copying merged model to mounted output dir: %s", args.output_dir)
+    for root, dirs, files in os.walk(local_output_dir):
+        rel = os.path.relpath(root, local_output_dir)
+        dst_root = os.path.join(args.output_dir, rel) if rel != "." else args.output_dir
+        os.makedirs(dst_root, exist_ok=True)
+        for fname in files:
+            shutil.copyfile(os.path.join(root, fname), os.path.join(dst_root, fname))
 
     log.info("Done. Merged model ready for vLLM serving at %s", args.output_dir)
 
