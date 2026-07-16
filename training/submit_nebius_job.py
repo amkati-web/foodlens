@@ -17,18 +17,18 @@ Then build & push the job image once:
 
 Usage:
     # Step 1: build the training dataset (CPU job)
-    python training/submit_nebius_job.py --stage prepare --image <registry>/foodlens-job:latest
+    python3 training/submit_nebius_job.py --stage prepare --image <registry>/foodlens-job:latest
 
     # Step 2: LoRA fine-tune on a single H100 (~2h for 3 epochs on the seed+OFF dataset)
-    python training/submit_nebius_job.py --stage finetune --image <registry>/foodlens-job:latest \
+    python3 training/submit_nebius_job.py --stage finetune --image <registry>/foodlens-job:latest \
         --gpu h100 --gpu-count 1
 
     # Step 3: merge the LoRA adapter into full weights (CPU or small GPU job)
-    python training/submit_nebius_job.py --stage merge --image <registry>/foodlens-job:latest
+    python3 training/submit_nebius_job.py --stage merge --image <registry>/foodlens-job:latest
 
     # Step 4: print the endpoint deploy command (does NOT execute it - endpoints
     # bill continuously while running, so this is reviewed and run manually)
-    python training/submit_nebius_job.py --stage deploy --image <registry>/foodlens-serve:latest
+    python3 training/submit_nebius_job.py --stage deploy --image <registry>/foodlens-serve:latest
 
 Each stage prints the exact `nebius` command it will run (and runs it, unless
 --dry-run is passed, EXCEPT for the deploy stage which always only prints -
@@ -89,11 +89,14 @@ def print_deploy_command(image: str, bucket: str, subnet_id: str) -> None:
         "--public",
     ]
     print("Deploy command (review before running - this creates a continuously")
-    print("billed endpoint, so it is never auto-executed by this script):\n")
+    print("billed endpoint, so it is never auto-executed by this script):")
+    print("")
     print("  " + " ".join(shlex.quote(c) for c in cmd))
-    print("\nOnce running, check status with:")
+    print("")
+    print("Once running, check status with:")
     print("  nebius ai endpoint get <endpoint_id>")
-    print("\nStop it when not in use to pause billing:")
+    print("")
+    print("Stop it when not in use to pause billing:")
     print("  nebius ai endpoint stop <endpoint_id>")
 
 
@@ -129,7 +132,8 @@ def main() -> None:
         *GPU_PRESETS[args.gpu],
     ]
 
-    print("Running:\n  " + " ".join(shlex.quote(c) for c in cmd))
+    print("Running:")
+    print("  " + " ".join(shlex.quote(c) for c in cmd))
     if args.dry_run:
         return
 
